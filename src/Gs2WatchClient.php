@@ -51,7 +51,7 @@ class Gs2WatchClient extends AbstractGs2Client {
 	 * @return array
 	 * * items
 	 * 	* array
-	 * 		* alermId => アラームID
+	 * 		* alarmId => アラームID
 	 * 		* ownerId => オーナーID
 	 * 		* name => アラーム名
 	 * 		* description => 説明文
@@ -67,15 +67,15 @@ class Gs2WatchClient extends AbstractGs2Client {
 	 * 		* lastStatusChangeAt => 最終ステータス更新日時
 	 * * nextPageToken => 次ページトークン
 	 */
-	public function describeAlerm($pageToken = NULL, $limit = NULL) {
+	public function describeAlarm($pageToken = NULL, $limit = NULL) {
 		$query = [];
 		if($pageToken) $query['pageToken'] = $pageToken;
 		if($limit) $query['limit'] = $limit;
 		return $this->doGet(
 					'Gs2Watch', 
-					'DescribeAlerm', 
+					'DescribeAlarm', 
 					Gs2WatchClient::$ENDPOINT, 
-					'/alerm',
+					'/alarm',
 					$query);
 	}
 	
@@ -96,7 +96,7 @@ class Gs2WatchClient extends AbstractGs2Client {
 	 * * notificationId => 通知ID
 	 * @return array
 	 * * item
-	 * 	* alermId => アラームID
+	 * 	* alarmId => アラームID
 	 * 	* ownerId => オーナーID
 	 * 	* name => アラーム名
 	 * 	* description => 説明文
@@ -111,7 +111,7 @@ class Gs2WatchClient extends AbstractGs2Client {
 	 * 	* status => ステータス
 	 * 	* lastStatusChangeAt => 最終ステータス更新日時
 	 */
-	public function createAlerm($request) {
+	public function createAlarm($request) {
 		if(is_null($request)) throw new NullPointerException();
 		$body = [];
 		if(array_key_exists('name', $request)) $body['name'] = $request['name'];
@@ -125,9 +125,9 @@ class Gs2WatchClient extends AbstractGs2Client {
 		$query = [];
 		return $this->doPost(
 					'Gs2Watch', 
-					'CreateAlerm', 
+					'CreateAlarm', 
 					Gs2WatchClient::$ENDPOINT, 
-					'/alerm',
+					'/alarm',
 					$body,
 					$query);
 	}
@@ -136,10 +136,10 @@ class Gs2WatchClient extends AbstractGs2Client {
 	 * アラームを取得
 	 * 
 	 * @param array $request
-	 * * alermName => アラーム名
+	 * * alarmName => アラーム名
 	 * @return array
 	 * * item
-	 * 	* alermId => アラームID
+	 * 	* alarmId => アラームID
 	 * 	* ownerId => オーナーID
 	 * 	* name => アラーム名
 	 * 	* description => 説明文
@@ -154,16 +154,16 @@ class Gs2WatchClient extends AbstractGs2Client {
 	 * 	* status => ステータス
 	 * 	* lastStatusChangeAt => 最終ステータス更新日時
 	 */
-	public function getAlerm($request) {
+	public function getAlarm($request) {
 		if(is_null($request)) throw new NullPointerException();
-		if(!array_key_exists('alermName', $request)) throw new NullPointerException();
-		if(is_null($request['alermName'])) throw new NullPointerException();
+		if(!array_key_exists('alarmName', $request)) throw new NullPointerException();
+		if(is_null($request['alarmName'])) throw new NullPointerException();
 		$query = [];
 		return $this->doGet(
 				'Gs2Watch',
-				'GetAlerm',
+				'GetAlarm',
 				Gs2WatchClient::$ENDPOINT,
-				'/alerm/'. $request['alermName'],
+				'/alarm/'. $request['alarmName'],
 				$query);
 	}
 
@@ -171,14 +171,14 @@ class Gs2WatchClient extends AbstractGs2Client {
 	 * アラームを更新
 	 * 
 	 * @param array $request
-	 * * alermName => アラーム名
+	 * * alarmName => アラーム名
 	 * * description => 説明文
 	 * * expression => 演算子(>=, >, <, <=)
 	 * * threshold => 閾値
 	 * * notificationId => 通知ID
 	 * @return array
 	 * * item
-	 * 	* alermId => アラームID
+	 * 	* alarmId => アラームID
 	 * 	* ownerId => オーナーID
 	 * 	* name => アラーム名
 	 * 	* description => 説明文
@@ -193,10 +193,10 @@ class Gs2WatchClient extends AbstractGs2Client {
 	 * 	* status => ステータス
 	 * 	* lastStatusChangeAt => 最終ステータス更新日時
 	 */
-	public function updateAlerm($request) {
+	public function updateAlarm($request) {
 		if(is_null($request)) throw new NullPointerException();
-		if(!array_key_exists('alermName', $request)) throw new NullPointerException();
-		if(is_null($request['alermName'])) throw new NullPointerException();
+		if(!array_key_exists('alarmName', $request)) throw new NullPointerException();
+		if(is_null($request['alarmName'])) throw new NullPointerException();
 		$body = [];
 		if(array_key_exists('description', $request)) $body['description'] = $request['description'];
 		if(array_key_exists('expression', $request)) $body['expression'] = $request['expression'];
@@ -205,9 +205,9 @@ class Gs2WatchClient extends AbstractGs2Client {
 		$query = [];
 		return $this->doPut(
 				'Gs2Watch',
-				'UpdateAlerm',
+				'UpdateAlarm',
 				Gs2WatchClient::$ENDPOINT,
-				'/alerm/'. $request['alermName'],
+				'/alarm/'. $request['alarmName'],
 				$body,
 				$query);
 	}
@@ -216,18 +216,18 @@ class Gs2WatchClient extends AbstractGs2Client {
 	 * アラームを削除
 	 * 
 	 * @param array $request
-	 * * alermName => アラーム名
+	 * * alarmName => アラーム名
 	 */
-	public function deleteAlerm($request) {
+	public function deleteAlarm($request) {
 		if(is_null($request)) throw new NullPointerException();
-		if(!array_key_exists('alermName', $request)) throw new NullPointerException();
-		if(is_null($request['alermName'])) throw new NullPointerException();
+		if(!array_key_exists('alarmName', $request)) throw new NullPointerException();
+		if(is_null($request['alarmName'])) throw new NullPointerException();
 		$query = [];
 		return $this->doDelete(
 					'Gs2Watch', 
-					'DeleteAlerm', 
+					'DeleteAlarm', 
 					Gs2WatchClient::$ENDPOINT, 
-					'/alerm/'. $request['alermName'],
+					'/alarm/'. $request['alarmName'],
 					$query);
 	}
 
@@ -237,30 +237,30 @@ class Gs2WatchClient extends AbstractGs2Client {
 	 * 過去にアラームが発生した履歴などを確認できます。<br>
 	 *
 	 * @param array $request
-	 * * alermName => アラーム名
+	 * * alarmName => アラーム名
 	 * @param string $pageToken ページトークン
 	 * @param integer $limit 取得件数
 	 * @return array
 	 * * items
 	 * 	* array
 	 * 		* eventId => アラームイベントID
-	 * 		* alermId => アラームID
+	 * 		* alarmId => アラームID
 	 * 		* type => イベントの種類
 	 * 		* eventAt => イベント発生日時
 	 * * nextPageToken => 次ページトークン
 	 */
-	public function describeAlermEvent($request, $pageToken = NULL, $limit = NULL) {
+	public function describeAlarmEvent($request, $pageToken = NULL, $limit = NULL) {
 		if(is_null($request)) throw new NullPointerException();
-		if(!array_key_exists('alermName', $request)) throw new NullPointerException();
-		if(is_null($request['alermName'])) throw new NullPointerException();
+		if(!array_key_exists('alarmName', $request)) throw new NullPointerException();
+		if(is_null($request['alarmName'])) throw new NullPointerException();
 		$query = [];
 		if($pageToken) $query['pageToken'] = $pageToken;
 		if($limit) $query['limit'] = $limit;
 		return $this->doGet(
 				'Gs2Watch',
-				'DescribeAlermEvent',
+				'DescribeAlarmEvent',
 				Gs2WatchClient::$ENDPOINT,
-				'/alerm/'. $request['alermName']. '/event',
+				'/alarm/'. $request['alarmName']. '/event',
 				$query);
 	}
 
